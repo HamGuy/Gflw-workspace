@@ -11,7 +11,7 @@
                 "${file}",
                 "/opt/homebrew/lib/libglfw.3.3.dylib", // 链接 glfw 库，非常重要
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}",
+                "${fileDirname}/bin/${fileBasenameNoExtension}",
                 "-framework",
                 "OpenGL", // 引入 OpenGL
                 "-framework",

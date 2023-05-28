@@ -5,7 +5,7 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "/opt/homebrew/include/",
-                "${workspaceFolder}/dependency/glad/include/"
+                "${workspaceFolder}/include/"
             ],
             "defines": [],
             "macFrameworkPath": [
@@ -19,7 +19,7 @@
                 "path": [
                   "${workspaceFolder}/**",
                   "/opt/homebrew/include/",
-                  "${workspaceFolder}/dependency/glad/include/"
+                  "${workspaceFolder}/include/"
                 ]
               }
         }

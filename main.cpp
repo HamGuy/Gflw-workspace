@@ -1,12 +1,10 @@
 #include <iostream>
-
+#include <glad/glad.h> 
 #ifdef __APPLE__
 // Defined before OpenGL and GLUT includes to avoid deprecation messages
 #define GL_SILENCE_DEPRECATION
 #include <GLFW/glfw3.h>
 #endif
-
-#include <glad/glad.h> 
 
 
 int main() {
