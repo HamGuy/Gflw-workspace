@@ -8,7 +8,10 @@
                 "-fcolor-diagnostics",
                 "-fansi-escape-codes",
                 "-g",
+                "-std=c++17",
+                "-I${workspaceFolder}/include",
                 "${file}",
+                "${workspaceFolder}/glad.c",
                 "/opt/homebrew/lib/libglfw.3.3.dylib", // 链接 glfw 库，非常重要
                 "-o",
                 "${fileDirname}/bin/${fileBasenameNoExtension}",
