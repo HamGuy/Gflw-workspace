@@ -109,6 +109,8 @@ int main()
     glGenBuffers(1, &VBO);
 
     /// 绑定缓冲对象
+    glBindVertexArray(VAO); //绑定顶点数组对象
+    
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     /// 跟顶点数据绑定
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
