@@ -1,27 +1,38 @@
 #include <iostream>
-#include <glad/glad.h> 
+#include <glad/glad.h>
 #ifdef __APPLE__
 // Defined before OpenGL and GLUT includes to avoid deprecation messages
 #define GL_SILENCE_DEPRECATION
 #include <GLFW/glfw3.h>
 #endif
 
+int main()
+{
 
-int main() {
     GLFWwindow *window;
-    if (!glfwInit()) {
+    if (!glfwInit())
+    {
         return -1;
     }
 
     window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
-    if (!window) {
+    if (!window)
+    {
         glfwTerminate();
         return -1;
     }
 
     glfwMakeContextCurrent(window);
 
-    while (!glfwWindowShouldClose(window)) {
+    /// 创建好窗口之后再调用，否则会初始化失败
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+    {
+        std::cout << "Failed to initialize GLAD" << std::endl;
+        return -1;
+    }
+
+    while (!glfwWindowShouldClose(window))
+    {
         // Render here
         glClear(GL_COLOR_BUFFER_BIT);
 

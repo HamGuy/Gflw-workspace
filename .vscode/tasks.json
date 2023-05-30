@@ -11,10 +11,10 @@
                 "-std=c++17",
                 "-I${workspaceFolder}/include", // 参考此处补充配置 https://github.com/noochxxo/OpenGL-Starter/blob/main/OSX_64-bit/.vscode/tasks.json
                 "${file}",
-                "${workspaceFolder}/glad.c",
+                "${workspaceFolder}/dependency/glad.c",
                 "/opt/homebrew/lib/libglfw.3.3.dylib", // 链接 glfw 库，非常重要
                 "-o",
-                "${fileDirname}/bin/${fileBasenameNoExtension}",
+                "${workspaceFolder}/bin/${fileBasenameNoExtension}",
                 "-framework",
                 "OpenGL", // 引入 OpenGL
                 "-framework",

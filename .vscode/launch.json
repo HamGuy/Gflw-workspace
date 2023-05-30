@@ -8,7 +8,7 @@
       "name": "C/C++: clang++ build and debug active file", // 需要跟 task.json 中的名字一致
       "type": "cppdbg",
       "request": "launch",
-      "program": "${fileDirname}/bin/${fileBasenameNoExtension}",
+      "program": "${workspaceFolder}/bin/${fileBasenameNoExtension}",
       "args": [],
       "stopAtEntry": true,
       "cwd": "${workspaceFolder}",
