@@ -3,61 +3,6 @@
 #include <iostream>
 #include "commonshader.h"
 
-int createVertexShader()
-{
-    unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-    glCompileShader(vertexShader);
-    int success;
-    char infoLog[512];
-
-    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-    if (!success)
-    {
-        glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-        std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n"
-                  << infoLog << std::endl;
-        return -1;
-    }
-
-    return vertexShader;
-}
-
-int createFragmentShader(const char *shaderSource)
-{
-    unsigned int fragmentShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(fragmentShader, 1, &shaderSource, NULL);
-    glCompileShader(fragmentShader);
-
-    int success;
-    char infoLog[512];
-    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-    if (!success)
-    {
-        glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-        std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n"
-                  << infoLog << std::endl;
-        return -1;
-    }
-
-    return fragmentShader;
-}
-
-int checkIfProgramLinked(unsigned int shaderProgram)
-{
-    int success;
-    char infoLog[512];
-    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-    if (!success)
-    {
-        glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-        std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n"
-                  << infoLog << std::endl;
-        return -1;
-    }
-    return 0;
-}
-
 int main()
 {
     if (!glfwInit())
@@ -87,48 +32,56 @@ int main()
         return -1;
     }
 
-    unsigned int vertexShader1 = createVertexShader();
-    unsigned int vertexShader2 = createVertexShader();
-    unsigned int fragmentShader1 = createFragmentShader(fragmentShaderSource);
-    unsigned int fragmentShader2 = createFragmentShader(fragmentShaderSource2);
 
-    if (vertexShader1 == -1  || vertexShader2 == -1 || fragmentShader1 == -1 || fragmentShader2 == -1)
+    unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
+    glCompileShader(vertexShader);
+    int success;
+    char infoLog[512];
+
+    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+    if (!success)
     {
-        std::cout << "Failed to create shader" << std::endl;
+        glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
+        std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n"
+                  << infoLog << std::endl;
         return -1;
     }
 
-    unsigned int shaderProgram1 = glCreateProgram();
-    glAttachShader(shaderProgram1, vertexShader1);
-    glAttachShader(shaderProgram1, fragmentShader1);
-    glLinkProgram(shaderProgram1);
+    unsigned int fragmentShader = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
+    glCompileShader(fragmentShader);
 
-    if (checkIfProgramLinked(shaderProgram1) == -1)
+    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
+    if (!success)
     {
-        std::cout << "Failed to link program1" << std::endl;
+        glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
+        std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n"
+                  << infoLog << std::endl;
         return -1;
     }
 
-    unsigned int shaderProgram2 = glCreateProgram();
-    glAttachShader(shaderProgram2, vertexShader2);
-    glAttachShader(shaderProgram2, fragmentShader2);
-    glLinkProgram(shaderProgram2);
-
-    if (checkIfProgramLinked(shaderProgram2) == -1)
+    unsigned int shaderProgram = glCreateProgram();
+    glAttachShader(shaderProgram, vertexShader);
+    glAttachShader(shaderProgram, fragmentShader);
+    glLinkProgram(shaderProgram);
+    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+    if (!success)
     {
-        std::cout << "Failed to link program2" << std::endl;
+        glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
+        std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n"
+                  << infoLog << std::endl;
         return -1;
     }
 
-    glDeleteShader(vertexShader1);
-    glDeleteShader(vertexShader2);
-    glDeleteShader(fragmentShader1);
-    glDeleteShader(fragmentShader2);
+    glDeleteShader(vertexShader);
+    glDeleteShader(fragmentShader);
 
     float vertices1[] = {
-        -0.5f, -0.5f, 0.0f,
-        -0.25f, 0.5f, 0.0f,
-        0.0f, -0.5f, 0.0f};
+        0.0f, -0.5f, 0.0f, // left
+        -0.25f, 0.5f, 0.0f, // right
+        -0.5f, -0.5f, 0.0f, // top
+        };
 
     float vertices2[] = {
         0.0f, -0.5f, 0.0f,
@@ -175,7 +128,7 @@ int main()
     glEnableVertexAttribArray(0);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
+    // glBindVertexArray(0);
 
     while (!glfwWindowShouldClose(window))
     {
@@ -183,11 +136,10 @@ int main()
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glUseProgram(shaderProgram1);
+        glUseProgram(shaderProgram);
         glBindVertexArray(VAO1);
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
-        glUseProgram(shaderProgram2);
         glBindVertexArray(VAO2);
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
