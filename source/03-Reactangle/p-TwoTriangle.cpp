@@ -79,10 +79,12 @@ int main()
 
     /// 矩形顶点
     float vertices[] = {
-        0.5f, 0.5f, 0.0f,   // 右上角
-        0.5f, -0.5f, 0.0f,  // 右下角
-        -0.5f, -0.5f, 0.0f, // 左下角
-        -0.5f, 0.5f, 0.0f   // 左上角
+        -0.5f, -0.5f, 0.0f,
+        -0.25f, 0.5f, 0.0f,
+        0.0f, -0.5f, 0.0f,
+        0.0f, -0.5f, 0.0f,
+        0.25f, 0.5f, 0.0f,
+        0.5f, -0.5f, 0.0f,
     };
 
     /// 顶点索引，定义绘制顺序(从0开始)
@@ -103,7 +105,7 @@ int main()
     
     glGenBuffers(1, &VBO);
     glGenVertexArrays(1, &VAO);
-    glGenBuffers(1,&EBO);
+    // glGenBuffers(1,&EBO);
 
 
     // 绑定顶点数组对象
@@ -115,9 +117,9 @@ int main()
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
     /// 绑定元素缓冲对象
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     /// 跟元素缓冲对象数据绑定
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    // glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
     glEnableVertexAttribArray(0);
@@ -144,8 +146,8 @@ int main()
         glUseProgram(shaderProgram);
         /// 绑定顶点数组对象
         glBindVertexArray(VAO);
-        /// 绘制矩形
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        /// 绘制两个三角形
+        glDrawArrays(GL_TRIANGLES, 0, 6);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
