@@ -2,6 +2,11 @@
 #include <iostream>
 #include "commonshader.h"
 
+/**
+ * @brief 绘制两个不同颜色的三角形
+ * 
+ * @return int 
+ */
 int main()
 {
     if (!glfwInit())

@@ -3,6 +3,11 @@
 #include <iostream>
 #include "commonshader.h"
 
+/**
+ * @brief 绘制两个相连接的三角形
+ * 
+ * @return int 
+ */
 int main()
 {
     if (!glfwInit())
