@@ -103,14 +103,13 @@ int main()
     unsigned int VBO;
     /// 顶点数组对象
     unsigned int VAO;
-
-    /// ！！！先创建 VAO 在创建 VBO
-    glGenVertexArrays(1, &VAO);
+    
     glGenBuffers(1, &VBO);
+    glGenVertexArrays(1, &VAO);
 
     /// 绑定缓冲对象
     glBindVertexArray(VAO); //绑定顶点数组对象
-    
+
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     /// 跟顶点数据绑定
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
