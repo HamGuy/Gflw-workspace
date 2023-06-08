@@ -51,6 +51,16 @@ const char *fragmentShaderSource = "#version 330 core\n"
                                    "   FragColor = vertexColor;\n"
                                    "}\0";
 
+
+/// uniform片段着色器
+const char *fragmentUniformShaderSource = "#version 330 core\n"
+                                   "out vec4 FragColor;\n"
+                                   "uniform vec4 ourColor;\n"
+                                   "void main()\n"
+                                   "{\n"
+                                   "   FragColor = ourColor;\n"
+                                   "}\0";
+
 int createVertexShader() {
     unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
